@@ -4,7 +4,7 @@ import { Spin } from "antd";
 const asyncComponent = importComponent => {
     return class extends Component {
         constructor() {
-            super(props);
+            super();
             this.state = {
                 component: null
             };
