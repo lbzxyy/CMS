@@ -1,4 +1,22 @@
 .container {
   height: 100%;
   background: url('../../assets/bg.png') no-repeat center center;
+  position: relative;
+  .login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 30px;
+    width: 350px;
+    height: 450px;
+    background: #fff;
+    .title {
+      color: #41b3f9;
+      font-size: 26px;
+      text-align: center;
+      padding: 30px;
+      font-weight: 900;
+    }
+  }
 }
