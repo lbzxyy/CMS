@@ -4,7 +4,9 @@ class Login extends Component {
 
   render() {
     return(
-      <h1>登录页</h1>
+      <div className="container">
+        
+      </div>
     )
   }
 } 

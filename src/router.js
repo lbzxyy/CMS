@@ -1,4 +1,4 @@
-import asyncComponent from './utils/asyncComponent';
+import asyncComponent from '@utils/asyncComponent';
 
 // import Index from "./pages/Layout/index";
 const Index = asyncComponent(()=>import("./pages/Layout/index"));
