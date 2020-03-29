@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import './index.scss';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
-
+import { login } from './service';
+import md5 from 'js-md5';
 class Login extends Component {
-
-   onFinish = values => {
+  // 提交表单 校验成功 回调事件
+  onFinish = async(values) => {
     console.log('Received values of form: ', values);
+    values.password = md5(values.password);
+
+    const { data } = await login(values);
+    console.log(data,'dtataaaaaa')
   };
-  
+  onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo);
+  }
 
   render() {
     return(
@@ -20,6 +26,7 @@ class Login extends Component {
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={this.onFinish}
+          onFinishFailed= {this.onFinishFailed}
         >
           <div className="title">品连后台管理系统</div>
           <Form.Item
@@ -43,7 +50,7 @@ class Login extends Component {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot" href="">
+            <a className="login-form-forgot" href="/forget">
               Forgot password
             </a>
           </Form.Item>
@@ -52,7 +59,7 @@ class Login extends Component {
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            Or <a href="">register now!</a>
+            Or <a href="/register">register now!</a>
           </Form.Item>
         </Form>
         </div>
