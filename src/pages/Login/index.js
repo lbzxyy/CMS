@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
 import './index.scss';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { login } from './service';
+import { getData, saveData } from '@utils/cache';
 import md5 from 'js-md5';
 class Login extends Component {
+  formRef = React.createRef();
+  componentDidMount() {
+    this.formRef.current.setFieldsValue({
+      username: getData('username') || '',
+      password: getData('password') || ''
+    })
+  }
   // 提交表单 校验成功 回调事件
   onFinish = async(values) => {
     console.log('Received values of form: ', values);
+    if(values.remember) { // 勾选记住
+      saveData('username',values.username)
+      saveData('password',values.password)
+      console.log(this.props,'props')
+    }
     values.password = md5(values.password);
 
-    const { data } = await login(values);
+    const { data, errorCode } = await login(values);
+    if(errorCode === '100200') {
+      message.success('登录成功')
+    }
     console.log(data,'dtataaaaaa')
   };
   onFinishFailed = errorInfo => {
@@ -27,6 +43,7 @@ class Login extends Component {
           initialValues={{ remember: true }}
           onFinish={this.onFinish}
           onFinishFailed= {this.onFinishFailed}
+          ref={this.formRef}
         >
           <div className="title">品连后台管理系统</div>
           <Form.Item
